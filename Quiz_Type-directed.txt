@@ -1,0 +1,168 @@
+Type-Directed Programming
+TOTAL POINTS 8
+1.
+Question 1
+Type-directed programming is a language mechanism that
+
+1 point
+
+****infers values from types
+
+
+infers values from other values
+
+
+infers types from values
+
+
+infers types from other types
+
+2.
+Question 2
+When the compiler infers an implicit parameter of type T, it searches for possible candidates in
+
+1 point
+
+inherited implicit definitions
+
+
+****implicit definitions in companion objects of the types associated with the type T
+
+
+implicit definitions of outer scopes
+
+
+imported implicit definitions
+
+
+implicit definitions found in the classpath
+
+3.
+Question 3
+What is the output of the following program?
+
+1234
+implicit val n: Int = 42
+def f(implicit x: Int) = x
+println(f)
+
+1 point
+
+****42
+
+
+The program does not compile
+
+
+0
+
+4.
+Question 4
+What is the output of the following program?
+
+1234
+implicit val n: Int = 42
+def f(implicit x: Int) = x
+println(f(0))
+
+1 point
+
+The program does not compile
+
+
+42
+
+
+****0
+
+5.
+Question 5
+How could you change the first line of this program to make it compile?
+
+1234
+val world: String = "World"
+def greet(implicit name: String) = s"Hello, $name!"
+println(greet)
+
+Please rewrite the first line, completely.
+
+1 point
+****implicit val world: String = "World"
+6.
+Question 6
+What is the output of the following program?
+
+12345678910
+trait LowPriorityImplicits {
+  implicit val intOrdering: Ordering[Int] = Ordering.Int
+}
+object Main extends LowPriorityImplicits {
+  implicit val intReverseOrdering: Ordering[Int] = Ordering.Int.reverse
+  def main(args: Array[String]): Unit = {
+    println(List(1, 2, 3).min)
+  }
+}
+
+1 point
+****3
+7.
+Question 7
+Consider the following program:
+
+1234567891011
+trait Show[A] {
+  def apply(a: A): String
+}
+object Show {
+  implicit val showInt: Show[Int] = new Show[Int] {
+    def apply(n: Int): String = s"Int($n)"
+  }
+}
+
+implicitly[Show[Int]]
+
+Take a close look at the last line. The expression  implicitly[Show[Int]]  compiles because the compiler finds an implicit value of type  Show[Int] , and supplies it as an argument to the method  implicitly . For reference, here is the definition of  implicitly :
+
+12
+def implicitly[A](implicit arg: A): A = arg
+
+Rewrite the last line to show explicitly the implicit argument that has been inferred by the compiler. It should look like the following:
+
+12
+implicitly[Show[Int]](...)
+
+(replace the  ...  with the expression of type  Show[Int]  that has been implicitly inferred by the compiler)
+
+1 point
+****implicitly[Show[Int]](Show.showInt)
+8.
+Question 8
+What is the output of the following program?
+
+12345678910111213
+trait Show[A] {
+  def apply(a: A): String
+}
+object Show {
+  implicit val showInt: Show[Int] = new Show[Int] {
+    def apply(n: Int): String = s"Int($n)"
+  }
+}
+def printValue[A: Show](a: A): Unit = {
+  println(implicitly[Show[A]].apply(a))
+
+1 point
+
+It does not compile
+
+
+Int(0)
+
+
+****Int(42)
+
+
+0
+
+
+42

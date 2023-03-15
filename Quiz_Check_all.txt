@@ -1,0 +1,40 @@
+Check all the statements that are true
+
+More than one implicit conversion can be applied to an expression
+
+
+***********Implicit conversions can also take implicit parameters
+
+
+Implicit conversions can take several non-implicit parameters
+
+
+Implicit conversions must take exactly one non-implicit parameter
+
+2.What is the output of the following program?
+
+import scala.language.implicitConversions
+
+case class Rational(numerator: Int, denominator: Int)
+
+object Rational {
+  implicit def fromInt(n: Int) = Rational(n, 1)
+}
+
+val r: Rational = 42
+println(r)
+
+****** Rational(42, 1)
+
+3.
+Consider the following program:
+
+import scala.language.implicitConversions
+
+implicit class HasIsEven(n: Int) {
+  def isEven: Boolean = n % 2 == 0
+}
+
+42.isEven
+
+*******new HasIsEven(42).isEven

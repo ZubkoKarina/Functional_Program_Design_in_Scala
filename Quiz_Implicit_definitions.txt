@@ -1,0 +1,31 @@
+1.
+Implicit definitions can take implicit parameters?
+
+
+****true
+
+
+false
+
+2.
+At most two implicit definitions can be chained together.
+
+
+true
+
+
+*****false
+
+3.
+Consider the following program:
+trait Physics {
+  implicit def air: Gaz
+  implicit def condense(implicit gaz: Gaz): Liquid
+  implicit def freeze(implicit liquid: Liquid): Solid
+
+  implicitly[Solid]
+}
+Can you rewrite the last line with the inferred arguments explicitly written? It should look like the following:
+implicitly[Solid](...)
+
+**********implicitly[Solid](freeze(condense(air)))
